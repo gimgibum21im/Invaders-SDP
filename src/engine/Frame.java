@@ -55,7 +55,7 @@ public class Frame extends JFrame {
 	 */
 	public final int setScreen(final Screen screen) {
 		currentScreen = screen;
-		currentScreen.initialize();
+		currentScreen.initialize(); //GameScreen만 override하고있다. 나머지는 Screen.initialize()실행하는데 사실상 의미 없음
 		return currentScreen.run();
 	}
 

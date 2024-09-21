@@ -116,6 +116,7 @@ public final class Core {
 
 		int returnCode = 1; //0이면 종료, 1이면 타이틀스크린 2면 게임스크린 3이면 최대점수스크린
 		do {
+									//현재 레벨, 점수,     라이프,     쏜총알수,      파괴된적수
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
 
 			switch (returnCode) {
@@ -131,37 +132,51 @@ public final class Core {
 				// Game & score.
 				do {
 					// One extra live every few levels.
+					//게임레벨이 3의 배수이면서 && 남은 라이프가 최대(3개)보다 작다면 bonusLife = true로 설정함
 					boolean bonusLife = gameState.getLevel()
 							% EXTRA_LIFE_FRECUENCY == 0
 							&& gameState.getLivesRemaining() < MAX_LIVES;
-					
+
+					//currentScren을 GameScreen으로 설정함
 					currentScreen = new GameScreen(gameState,
-							gameSettings.get(gameState.getLevel() - 1),
+							gameSettings.get(gameState.getLevel() - 1), //gameSettings는 리스트로, 인덱스 0~6까지 사용되며 0은 1렙 6은 7렙임. 따라서 -1한 인덱스의 세팅을 꺼내온다.(106줄에서 순차적으로 add해줬음)
 							bonusLife, width, height, FPS);
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 							+ " game screen at " + FPS + " fps.");
+
+					//실제 게임이 실행되는 부분
 					frame.setScreen(currentScreen);
+					//게임이 종료됨
 					LOGGER.info("Closing game screen.");
 
-					gameState = ((GameScreen) currentScreen).getGameState();
+					gameState = ((GameScreen) currentScreen).getGameState(); //게임이 종류된 후, GameScreen이 직전 게임전적을 바탕으로 GameState를 새로 생성해서 반환한다.
 
+					//반환된 GameState를 레벨을 증가시켜 새로 생성한다.
 					gameState = new GameState(gameState.getLevel() + 1,
 							gameState.getScore(),
 							gameState.getLivesRemaining(),
 							gameState.getBulletsShot(),
 							gameState.getShipsDestroyed());
 
+					//생명이 남아있고, 게임레벨이 최고단계 이하라면 다음레벨로 한판 더 ! do로 돌아감
 				} while (gameState.getLivesRemaining() > 0
 						&& gameState.getLevel() <= NUM_LEVELS);
 
+				//여기에 도달했다면, 게임은 끝난거임(생명이 없거나, 최대레벨 클리어)
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 						+ " score screen at " + FPS + " fps, with a score of "
 						+ gameState.getScore() + ", "
 						+ gameState.getLivesRemaining() + " lives remaining, "
 						+ gameState.getBulletsShot() + " bullets shot and "
 						+ gameState.getShipsDestroyed() + " ships destroyed.");
+
+				//게임 끝난 직후, Gameover화면(ScoreScreen) 띄우는 부분
+				//현재화면을 ScoreScreen으로 설정
 				currentScreen = new ScoreScreen(width, height, FPS, gameState);
-				returnCode = frame.setScreen(currentScreen);
+
+				returnCode = frame.setScreen(currentScreen); //setScreen에서 scoreScreen.run() 실행됨
+				//returnCode는 esc눌렀다면 1로, 스페이스눌렀다면 2가 반환될거임.
+
 				LOGGER.info("Closing score screen.");
 				break;
 			case 3:

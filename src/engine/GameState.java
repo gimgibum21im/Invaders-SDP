@@ -7,7 +7,7 @@ package engine;
  * 
  */
 public class GameState {
-
+//현재 레벨,점수,라이프,쏜총알수,파괴된적수
 	/** Current game level. */
 	private int level;
 	/** Current score. */

@@ -91,13 +91,18 @@ public class ScoreScreen extends Screen {
 	 */
 	public final int run() {
 		super.run();
+		//스페이스 또는 esc 입력으로, Screen.run()에서 this.update()실행이 끝나고, Screen.run()이 종료되면 여기로 나옴
 
+		//위에서 바뀐 returnCode로 다음 스크린번호 반환
 		return this.returnCode;
 	}
 
 	/**
 	 * Updates the elements on screen and checks for events.
 	 */
+	// esc누르면 리턴코드 1로
+	// 스페이스누르면 리턴코드 2로
+	// 위 리턴코드는 메인함수로 전달되고 메인의 switch문으로 다시 이동
 	protected final void update() {
 		super.update();
 
@@ -117,6 +122,7 @@ public class ScoreScreen extends Screen {
 					saveScore();
 			}
 
+			//유저이름 설정부분
 			if (this.isNewRecord && this.selectionCooldown.checkFinished()) {
 				if (inputManager.isKeyDown(KeyEvent.VK_RIGHT)) {
 					this.nameCharSelected = this.nameCharSelected == 2 ? 0

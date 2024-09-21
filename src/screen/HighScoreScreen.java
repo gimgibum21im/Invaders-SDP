@@ -47,7 +47,9 @@ public class HighScoreScreen extends Screen {
 	 */
 	public final int run() {
 		super.run();
+		//스페이스 입력으로, Screen.run()에서 this.update()실행이 끝나고, Screen.run()이 종료되면 여기로 나옴
 
+		//위에서 바뀐 returnCode로 다음 스크린번호 반환
 		return this.returnCode;
 	}
 
@@ -58,6 +60,7 @@ public class HighScoreScreen extends Screen {
 		super.update();
 
 		draw();
+		//스페이스 누르면 다시 running false로
 		if (inputManager.isKeyDown(KeyEvent.VK_SPACE)
 				&& this.inputDelay.checkFinished())
 			this.isRunning = false;

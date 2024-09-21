@@ -84,8 +84,11 @@ public class Screen {
 		while (this.isRunning) {
 			long time = System.currentTimeMillis();
 
+			//동적바인딩으로 자식의 메서드 실행할겨
 			update();
-			//titlescreen이면, 스페이스가 눌러져서 isRunning=false까지 반복함.
+			//titlescreen이면, 스페이스가 눌러져서 isRunning=false 될 때 까지 반복함.
+			//scorescreen이면, esc 또는 스페이스 눌러져서 isRunning=false 될 때 까지 반복함.
+			//HighScoreScreen이면, 스페이스 눌러져서 isRunning=flase 될 때 까지 반복
 
 			time = (1000 / this.fps) - (System.currentTimeMillis() - time);
 			if (time > 0) {
@@ -97,7 +100,7 @@ public class Screen {
 			}
 		}
 
-		return 0;
+		return 0; //이 함수가 끝나면, 각각의(title,score,highscore) run에서 super.run()끝난 시점으로 으로 되돌아감.
 	}
 
 	/**
