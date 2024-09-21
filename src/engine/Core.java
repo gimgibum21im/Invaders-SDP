@@ -114,19 +114,19 @@ public final class Core {
 		
 		GameState gameState;
 
-		int returnCode = 1;
+		int returnCode = 1; //0이면 종료, 1이면 타이틀스크린 2면 게임스크린 3이면 최대점수스크린
 		do {
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
 
 			switch (returnCode) {
 			case 1:
-				// Main menu.
-				currentScreen = new TitleScreen(width, height, FPS);
+				// Main menu. + 다른 메뉴로 스페이스 누르기 전까진 case에 계속 머무름
+				currentScreen = new TitleScreen(width, height, FPS); //현재 화면을 타이틀스크린으로 설정
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 						+ " title screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
+				returnCode = frame.setScreen(currentScreen);//(입력(스페이스포함된)이 없다면, frame.setScreen()에서 호출한 Screen.run()이 무한 반복을 돌거임)
 				LOGGER.info("Closing title screen.");
-				break;
+				break; //반복조건 확인후 returnCode에 따른 case문 다시 실행
 			case 2:
 				// Game & score.
 				do {

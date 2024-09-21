@@ -85,6 +85,7 @@ public class Screen {
 			long time = System.currentTimeMillis();
 
 			update();
+			//titlescreen이면, 스페이스가 눌러져서 isRunning=false까지 반복함.
 
 			time = (1000 / this.fps) - (System.currentTimeMillis() - time);
 			if (time > 0) {

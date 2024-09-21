@@ -45,7 +45,9 @@ public class TitleScreen extends Screen {
 	 */
 	public final int run() {
 		super.run();
+		//스페이스 입력으로, Screen.run()이 종료되면 함수 끝남.
 
+		//위에서 바뀐 returnCode로 다음 스크린번호 반환
 		return this.returnCode;
 	}
 
@@ -58,16 +60,20 @@ public class TitleScreen extends Screen {
 		draw();
 		if (this.selectionCooldown.checkFinished()
 				&& this.inputDelay.checkFinished()) {
+
+			//윗키 또는 W 누르면 위 선택지로 returnCode변경
 			if (inputManager.isKeyDown(KeyEvent.VK_UP)
 					|| inputManager.isKeyDown(KeyEvent.VK_W)) {
 				previousMenuItem();
 				this.selectionCooldown.reset();
 			}
+			//아랫키 또는 S 누르면 아래 선택지로 returnCode변경
 			if (inputManager.isKeyDown(KeyEvent.VK_DOWN)
 					|| inputManager.isKeyDown(KeyEvent.VK_S)) {
 				nextMenuItem();
 				this.selectionCooldown.reset();
 			}
+			//스페이스면 running false
 			if (inputManager.isKeyDown(KeyEvent.VK_SPACE))
 				this.isRunning = false;
 		}
@@ -76,6 +82,7 @@ public class TitleScreen extends Screen {
 	/**
 	 * Shifts the focus to the next menu item.
 	 */
+	//맨 아래서 또 아래 누르면 처음으로 이동하는 등의 로직 + 2->3->0->2->3->0반복!
 	private void nextMenuItem() {
 		if (this.returnCode == 3)
 			this.returnCode = 0;
@@ -88,6 +95,7 @@ public class TitleScreen extends Screen {
 	/**
 	 * Shifts the focus to the previous menu item.
 	 */
+	//맨 위에서 또 위 누르면 마지막으로 이동하는 등의 로직
 	private void previousMenuItem() {
 		if (this.returnCode == 0)
 			this.returnCode = 3;
