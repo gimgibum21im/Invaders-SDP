@@ -18,7 +18,7 @@ import engine.InputManager;
 public class Screen {
 	
 	/** Milliseconds until the screen accepts user input. */
-	private static final int INPUT_DELAY = 1000;
+	private static final int INPUT_DELAY = 1000;//1초후부터 입력가능
 
 	/** Draw Manager instance. */
 	protected DrawManager drawManager;
@@ -82,6 +82,7 @@ public class Screen {
 		this.isRunning = true;
 
 		while (this.isRunning) {
+			//프레임을 위한 시작시간 찍기
 			long time = System.currentTimeMillis();
 
 			//동적바인딩으로 자식의 메서드 실행할겨
@@ -90,7 +91,10 @@ public class Screen {
 			//scorescreen이면, esc 또는 스페이스 눌러져서 isRunning=false 될 때 까지 반복함.
 			//HighScoreScreen이면, 스페이스 눌러져서 isRunning=flase 될 때 까지 반복
 
+
+			// 1초=1000밀리초. fps를 맞추기위해 1000/fps 밀리초마다 프레임을 찍어야됨.
 			time = (1000 / this.fps) - (System.currentTimeMillis() - time);
+			//만약 시작시간~지금까지 1000/fps밀리초가 지나지 않았다면, 기다리기.
 			if (time > 0) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(time);

@@ -125,6 +125,7 @@ public final class Core {
 				currentScreen = new TitleScreen(width, height, FPS); //현재 화면을 타이틀스크린으로 설정
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 						+ " title screen at " + FPS + " fps.");
+
 				returnCode = frame.setScreen(currentScreen);//(입력(스페이스포함된)이 없다면, frame.setScreen()에서 호출한 Screen.run()이 무한 반복을 돌거임)
 				LOGGER.info("Closing title screen.");
 				break; //반복조건 확인후 returnCode에 따른 case문 다시 실행

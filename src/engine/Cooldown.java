@@ -53,7 +53,7 @@ public class Cooldown {
 	 */
 	public final boolean checkFinished() {
 		if ((this.time == 0)
-				|| this.time + this.duration < System.currentTimeMillis())
+				|| this.time + this.duration < System.currentTimeMillis()) //시작시간+기간이 현재시간보다 작다면(현재시간이 더 많이 지났다면, true)
 			return true;
 		return false;
 	}

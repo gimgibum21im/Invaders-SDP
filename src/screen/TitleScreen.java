@@ -34,8 +34,8 @@ public class TitleScreen extends Screen {
 
 		// Defaults to play.
 		this.returnCode = 2;
-		this.selectionCooldown = Core.getCooldown(SELECTION_TIME);
-		this.selectionCooldown.reset();
+		this.selectionCooldown = Core.getCooldown(SELECTION_TIME); //200밀리초를 갖는 cooldown객체 생성해서 반환
+		this.selectionCooldown.reset(); // cooldown의 시작시간을 현재시간으로 설정(타이틀 스크린의 생성시간 즉 , 타이틀화면이 뜬 그 시간)
 	}
 
 	/**
@@ -58,20 +58,20 @@ public class TitleScreen extends Screen {
 		super.update();
 
 		draw();
-		if (this.selectionCooldown.checkFinished()
-				&& this.inputDelay.checkFinished()) {
+		if (this.selectionCooldown.checkFinished() //마지막 동작으로부터 0.2초가 지났고 &&
+				&& this.inputDelay.checkFinished()) { //객체생성으로부터 1초 지났다면. (매 입력이 아닌 그냥 스크린 전환후 1초가 지났는지)
 
 			//윗키 또는 W 누르면 위 선택지로 returnCode변경
 			if (inputManager.isKeyDown(KeyEvent.VK_UP)
 					|| inputManager.isKeyDown(KeyEvent.VK_W)) {
 				previousMenuItem();
-				this.selectionCooldown.reset();
+				this.selectionCooldown.reset();//동작 뒤 현재시간 갱신
 			}
 			//아랫키 또는 S 누르면 아래 선택지로 returnCode변경
 			if (inputManager.isKeyDown(KeyEvent.VK_DOWN)
 					|| inputManager.isKeyDown(KeyEvent.VK_S)) {
 				nextMenuItem();
-				this.selectionCooldown.reset();
+				this.selectionCooldown.reset();//동작 뒤 현재시간 갱신
 			}
 			//스페이스면 running false
 			if (inputManager.isKeyDown(KeyEvent.VK_SPACE))

@@ -23,12 +23,12 @@ import engine.GameSettings;
 public class EnemyShipFormation implements Iterable<EnemyShip> {
 
 	/** Initial position in the x-axis. */
-	private static final int INIT_POS_X = 20;
+	private static final int INIT_POS_X = 20; //가로 시작위치
 	/** Initial position in the y-axis. */
-	private static final int INIT_POS_Y = 100;
+	private static final int INIT_POS_Y = 100; //세로 시작위치
 	/** Distance between ships. */
-	private static final int SEPARATION_DISTANCE = 40;
-	/** Proportion of C-type ships. */
+	private static final int SEPARATION_DISTANCE = 40; //함선간 간격
+	/** Proportion of C-type ships. *///비율
 	private static final double PROPORTION_C = 0.2;
 	/** Proportion of B-type ships. */
 	private static final double PROPORTION_B = 0.4;
@@ -39,15 +39,15 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	/** Speed of the bullets shot by the members. */
 	private static final int BULLET_SPEED = 4;
 	/** Proportion of differences between shooting times. */
-	private static final double SHOOTING_VARIANCE = .2;
+	private static final double SHOOTING_VARIANCE = .2;//발사간 차이비율?
 	/** Margin on the sides of the screen. */
-	private static final int SIDE_MARGIN = 20;
+	private static final int SIDE_MARGIN = 20; //사이드로부터 마진
 	/** Margin on the bottom of the screen. */
-	private static final int BOTTOM_MARGIN = 80;
+	private static final int BOTTOM_MARGIN = 80; //바닥으로부터 마진
 	/** Distance to go down each pass. */
-	private static final int DESCENT_DISTANCE = 20;
+	private static final int DESCENT_DISTANCE = 20; //아래로 이동할때마다 가는 총 거리? 잘 모르겠음
 	/** Minimum speed allowed. */
-	private static final int MINIMUM_SPEED = 10;
+	private static final int MINIMUM_SPEED = 10; //최소속도
 
 	/** DrawManager instance. */
 	private DrawManager drawManager;
@@ -57,7 +57,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	private Screen screen;
 
 	/** List of enemy ships forming the formation. */
-	private List<List<EnemyShip>> enemyShips;
+	private List<List<EnemyShip>> enemyShips; //2차원 행렬이라 이렇게 했나?
 	/** Minimum time between shots. */
 	private Cooldown shootingCooldown;
 	/** Number of ships in the formation - horizontally. */
@@ -91,9 +91,9 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	/** Height of one ship. */
 	private int shipHeight;
 	/** List of ships that are able to shoot. */
-	private List<EnemyShip> shooters;
+	private List<EnemyShip> shooters; //발사가능한 적들
 	/** Number of not destroyed ships. */
-	private int shipCount;
+	private int shipCount; //남은 함선수
 
 	/** Directions the formation can move. */
 	private enum Direction {
@@ -332,7 +332,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 */
 	public final void shoot(final Set<Bullet> bullets) {
 		// For now, only ships in the bottom row are able to shoot.
-		int index = (int) (Math.random() * this.shooters.size());
+		int index = (int) (Math.random() * this.shooters.size()); //Math.random()은 0~1사이값 반환함.
 		EnemyShip shooter = this.shooters.get(index);
 
 		if (this.shootingCooldown.checkFinished()) {

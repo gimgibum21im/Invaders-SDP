@@ -67,10 +67,10 @@ public class Ship extends Entity {
 	 * @return Checks if the bullet was shot correctly.
 	 */
 	public final boolean shoot(final Set<Bullet> bullets) {
-		if (this.shootingCooldown.checkFinished()) {
-			this.shootingCooldown.reset();
+		if (this.shootingCooldown.checkFinished()) { //발사가능하면
+			this.shootingCooldown.reset(); //시간초기화
 			bullets.add(BulletPool.getBullet(positionX + this.width / 2,
-					positionY, BULLET_SPEED));
+					positionY, BULLET_SPEED)); //함선의 가로위치에서가운데 & 세로위치그대로, bullet_speed속도로 발사!
 			return true;
 		}
 		return false;
@@ -79,9 +79,12 @@ public class Ship extends Entity {
 	/**
 	 * Updates status of the ship.
 	 */
+	//함선의 상태(모습)를 업데이트함
 	public final void update() {
+		//유저 함선이 피격되었고, 움직이지 못하는 시간이 끝나지않았으면 모습을 ShipDestroyed로.
 		if (!this.destructionCooldown.checkFinished())
 			this.spriteType = SpriteType.ShipDestroyed;
+		//아니면 일반 함선모습으로
 		else
 			this.spriteType = SpriteType.Ship;
 	}
@@ -89,6 +92,7 @@ public class Ship extends Entity {
 	/**
 	 * Switches the ship to its destroyed state.
 	 */
+	//피격당했으니, 피격시작시간을 현재시각으로 reset
 	public final void destroy() {
 		this.destructionCooldown.reset();
 	}
@@ -98,9 +102,11 @@ public class Ship extends Entity {
 	 * 
 	 * @return True if the ship is currently destroyed.
 	 */
+	//피격여부
 	public final boolean isDestroyed() {
 		return !this.destructionCooldown.checkFinished();
 	}
+
 
 	/**
 	 * Getter for the ship's speed.
