@@ -14,6 +14,7 @@ import screen.ScoreScreen;
 import screen.Screen;
 import screen.TitleScreen;
 
+//test gibeom
 /**
  * Implements core game logic.
  * 
@@ -35,29 +36,22 @@ public final class Core {
 	private static final int EXTRA_LIFE_FRECUENCY = 3;
 	/** Total number of levels. */
 	private static final int NUM_LEVELS = 7;
-	
+
 	/** Difficulty settings for level 1. */
-	private static final GameSettings SETTINGS_LEVEL_1 =
-			new GameSettings(5, 4, 60, 2000);
+	private static final GameSettings SETTINGS_LEVEL_1 = new GameSettings(5, 4, 60, 2000);
 	/** Difficulty settings for level 2. */
-	private static final GameSettings SETTINGS_LEVEL_2 =
-			new GameSettings(5, 5, 50, 2500);
+	private static final GameSettings SETTINGS_LEVEL_2 = new GameSettings(5, 5, 50, 2500);
 	/** Difficulty settings for level 3. */
-	private static final GameSettings SETTINGS_LEVEL_3 =
-			new GameSettings(6, 5, 40, 1500);
+	private static final GameSettings SETTINGS_LEVEL_3 = new GameSettings(6, 5, 40, 1500);
 	/** Difficulty settings for level 4. */
-	private static final GameSettings SETTINGS_LEVEL_4 =
-			new GameSettings(6, 6, 30, 1500);
+	private static final GameSettings SETTINGS_LEVEL_4 = new GameSettings(6, 6, 30, 1500);
 	/** Difficulty settings for level 5. */
-	private static final GameSettings SETTINGS_LEVEL_5 =
-			new GameSettings(7, 6, 20, 1000);
+	private static final GameSettings SETTINGS_LEVEL_5 = new GameSettings(7, 6, 20, 1000);
 	/** Difficulty settings for level 6. */
-	private static final GameSettings SETTINGS_LEVEL_6 =
-			new GameSettings(7, 7, 10, 1000);
+	private static final GameSettings SETTINGS_LEVEL_6 = new GameSettings(7, 7, 10, 1000);
 	/** Difficulty settings for level 7. */
-	private static final GameSettings SETTINGS_LEVEL_7 =
-			new GameSettings(8, 7, 2, 500);
-	
+	private static final GameSettings SETTINGS_LEVEL_7 = new GameSettings(8, 7, 2, 500);
+
 	/** Frame to draw the screen on. */
 	private static Frame frame;
 	/** Screen currently shown. */
@@ -72,12 +66,11 @@ public final class Core {
 	/** Logger handler for printing to console. */
 	private static ConsoleHandler consoleHandler;
 
-
 	/**
 	 * Test implementation.
 	 * 
 	 * @param args
-	 *            Program args, ignored.
+	 *             Program args, ignored.
 	 */
 	public static void main(final String[] args) {
 		try {
@@ -111,85 +104,89 @@ public final class Core {
 		gameSettings.add(SETTINGS_LEVEL_5);
 		gameSettings.add(SETTINGS_LEVEL_6);
 		gameSettings.add(SETTINGS_LEVEL_7);
-		
+
 		GameState gameState;
 
-		int returnCode = 1; //0이면 종료, 1이면 타이틀스크린 2면 게임스크린 3이면 최대점수스크린
+		int returnCode = 1; // 0이면 종료, 1이면 타이틀스크린 2면 게임스크린 3이면 최대점수스크린
 		do {
-									//현재 레벨, 점수,     라이프,     쏜총알수,      파괴된적수
+			// 현재 레벨, 점수, 라이프, 쏜총알수, 파괴된적수
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
 
 			switch (returnCode) {
-			case 1:
-				// Main menu. + 다른 메뉴로 스페이스 누르기 전까진 case에 계속 머무름
-				currentScreen = new TitleScreen(width, height, FPS); //현재 화면을 타이틀스크린으로 설정
-				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-						+ " title screen at " + FPS + " fps.");
-
-				returnCode = frame.setScreen(currentScreen);//(입력(스페이스포함된)이 없다면, frame.setScreen()에서 호출한 Screen.run()이 무한 반복을 돌거임)
-				LOGGER.info("Closing title screen.");
-				break; //반복조건 확인후 returnCode에 따른 case문 다시 실행
-			case 2:
-				// Game & score.
-				do {
-					// One extra live every few levels.
-					//게임레벨이 3의 배수이면서 && 남은 라이프가 최대(3개)보다 작다면 bonusLife = true로 설정함
-					boolean bonusLife = gameState.getLevel()
-							% EXTRA_LIFE_FRECUENCY == 0
-							&& gameState.getLivesRemaining() < MAX_LIVES;
-
-					//currentScren을 GameScreen으로 설정함
-					currentScreen = new GameScreen(gameState,
-							gameSettings.get(gameState.getLevel() - 1), //gameSettings는 리스트로, 인덱스 0~6까지 사용되며 0은 1렙 6은 7렙임. 따라서 -1한 인덱스의 세팅을 꺼내온다.(106줄에서 순차적으로 add해줬음)
-							bonusLife, width, height, FPS);
+				case 1:
+					// Main menu. + 다른 메뉴로 스페이스 누르기 전까진 case에 계속 머무름
+					currentScreen = new TitleScreen(width, height, FPS); // 현재 화면을 타이틀스크린으로 설정
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-							+ " game screen at " + FPS + " fps.");
+							+ " title screen at " + FPS + " fps.");
 
-					//실제 게임이 실행되는 부분
-					frame.setScreen(currentScreen);
-					//게임이 종료됨
-					LOGGER.info("Closing game screen.");
+					returnCode = frame.setScreen(currentScreen);// (입력(스페이스포함된)이 없다면, frame.setScreen()에서 호출한
+																// Screen.run()이 무한 반복을 돌거임)
+					LOGGER.info("Closing title screen.");
+					break; // 반복조건 확인후 returnCode에 따른 case문 다시 실행
+				case 2:
+					// Game & score.
+					do {
+						// One extra live every few levels.
+						// 게임레벨이 3의 배수이면서 && 남은 라이프가 최대(3개)보다 작다면 bonusLife = true로 설정함
+						boolean bonusLife = gameState.getLevel()
+								% EXTRA_LIFE_FRECUENCY == 0
+								&& gameState.getLivesRemaining() < MAX_LIVES;
 
-					gameState = ((GameScreen) currentScreen).getGameState(); //게임이 종류된 후, GameScreen이 직전 게임전적을 바탕으로 GameState를 새로 생성해서 반환한다.
+						// currentScren을 GameScreen으로 설정함
+						currentScreen = new GameScreen(gameState,
+								gameSettings.get(gameState.getLevel() - 1), // gameSettings는 리스트로, 인덱스 0~6까지 사용되며 0은 1렙
+																			// 6은 7렙임. 따라서 -1한 인덱스의 세팅을 꺼내온다.(106줄에서
+																			// 순차적으로 add해줬음)
+								bonusLife, width, height, FPS);
+						LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
+								+ " game screen at " + FPS + " fps.");
 
-					//반환된 GameState를 레벨을 증가시켜 새로 생성한다.
-					gameState = new GameState(gameState.getLevel() + 1,
-							gameState.getScore(),
-							gameState.getLivesRemaining(),
-							gameState.getBulletsShot(),
-							gameState.getShipsDestroyed());
+						// 실제 게임이 실행되는 부분
+						frame.setScreen(currentScreen);
+						// 게임이 종료됨
+						LOGGER.info("Closing game screen.");
 
-					//생명이 남아있고, 게임레벨이 최고단계 이하라면 다음레벨로 한판 더 ! do로 돌아감
-				} while (gameState.getLivesRemaining() > 0
-						&& gameState.getLevel() <= NUM_LEVELS);
+						gameState = ((GameScreen) currentScreen).getGameState(); // 게임이 종류된 후, GameScreen이 직전 게임전적을 바탕으로
+																					// GameState를 새로 생성해서 반환한다.
 
-				//여기에 도달했다면, 게임은 끝난거임(생명이 없거나, 최대레벨 클리어)
-				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-						+ " score screen at " + FPS + " fps, with a score of "
-						+ gameState.getScore() + ", "
-						+ gameState.getLivesRemaining() + " lives remaining, "
-						+ gameState.getBulletsShot() + " bullets shot and "
-						+ gameState.getShipsDestroyed() + " ships destroyed.");
+						// 반환된 GameState를 레벨을 증가시켜 새로 생성한다.
+						gameState = new GameState(gameState.getLevel() + 1,
+								gameState.getScore(),
+								gameState.getLivesRemaining(),
+								gameState.getBulletsShot(),
+								gameState.getShipsDestroyed());
 
-				//게임 끝난 직후, Gameover화면(ScoreScreen) 띄우는 부분
-				//현재화면을 ScoreScreen으로 설정
-				currentScreen = new ScoreScreen(width, height, FPS, gameState);
+						// 생명이 남아있고, 게임레벨이 최고단계 이하라면 다음레벨로 한판 더 ! do로 돌아감
+					} while (gameState.getLivesRemaining() > 0
+							&& gameState.getLevel() <= NUM_LEVELS);
 
-				returnCode = frame.setScreen(currentScreen); //setScreen에서 scoreScreen.run() 실행됨
-				//returnCode는 esc눌렀다면 1로, 스페이스눌렀다면 2가 반환될거임.
+					// 여기에 도달했다면, 게임은 끝난거임(생명이 없거나, 최대레벨 클리어)
+					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
+							+ " score screen at " + FPS + " fps, with a score of "
+							+ gameState.getScore() + ", "
+							+ gameState.getLivesRemaining() + " lives remaining, "
+							+ gameState.getBulletsShot() + " bullets shot and "
+							+ gameState.getShipsDestroyed() + " ships destroyed.");
 
-				LOGGER.info("Closing score screen.");
-				break;
-			case 3:
-				// High scores.
-				currentScreen = new HighScoreScreen(width, height, FPS);
-				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-						+ " high score screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
-				LOGGER.info("Closing high score screen.");
-				break;
-			default:
-				break;
+					// 게임 끝난 직후, Gameover화면(ScoreScreen) 띄우는 부분
+					// 현재화면을 ScoreScreen으로 설정
+					currentScreen = new ScoreScreen(width, height, FPS, gameState);
+
+					returnCode = frame.setScreen(currentScreen); // setScreen에서 scoreScreen.run() 실행됨
+					// returnCode는 esc눌렀다면 1로, 스페이스눌렀다면 2가 반환될거임.
+
+					LOGGER.info("Closing score screen.");
+					break;
+				case 3:
+					// High scores.
+					currentScreen = new HighScoreScreen(width, height, FPS);
+					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
+							+ " high score screen at " + FPS + " fps.");
+					returnCode = frame.setScreen(currentScreen);
+					LOGGER.info("Closing high score screen.");
+					break;
+				default:
+					break;
 			}
 
 		} while (returnCode != 0);
@@ -246,7 +243,7 @@ public final class Core {
 	 * Controls creation of new cooldowns.
 	 * 
 	 * @param milliseconds
-	 *            Duration of the cooldown.
+	 *                     Duration of the cooldown.
 	 * @return A new cooldown.
 	 */
 	public static Cooldown getCooldown(final int milliseconds) {
@@ -257,9 +254,9 @@ public final class Core {
 	 * Controls creation of new cooldowns with variance.
 	 * 
 	 * @param milliseconds
-	 *            Duration of the cooldown.
+	 *                     Duration of the cooldown.
 	 * @param variance
-	 *            Variation in the cooldown duration.
+	 *                     Variation in the cooldown duration.
 	 * @return A new cooldown with variance.
 	 */
 	public static Cooldown getVariableCooldown(final int milliseconds,
