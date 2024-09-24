@@ -8,6 +8,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import entity.shop_item;
 import screen.GameScreen;
 import screen.HighScoreScreen;
 import screen.ScoreScreen;
@@ -140,8 +141,8 @@ public final class Core {
 
 					//currentScren을 GameScreen으로 설정함
 					currentScreen = new GameScreen(gameState,
-							gameSettings.get(gameState.getLevel() - 1), //gameSettings는 리스트로, 인덱스 0~6까지 사용되며 0은 1렙 6은 7렙임. 따라서 -1한 인덱스의 세팅을 꺼내온다.(106줄에서 순차적으로 add해줬음)
-							bonusLife, width, height, FPS);
+							gameSettings.get(gameState.getLevel() - 1 ), //gameSettings는 리스트로, 인덱스 0~6까지 사용되며 0은 1렙 6은 7렙임. 따라서 -1한 인덱스의 세팅을 꺼내온다.(106줄에서 순차적으로 add해줬음)
+							bonusLife, width, height, FPS, /*여기에 상점 테스트함*/new shop_item(5,10));
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 							+ " game screen at " + FPS + " fps.");
 

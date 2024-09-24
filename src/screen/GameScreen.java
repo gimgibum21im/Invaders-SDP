@@ -8,12 +8,7 @@ import engine.Cooldown;
 import engine.Core;
 import engine.GameSettings;
 import engine.GameState;
-import entity.Bullet;
-import entity.BulletPool;
-import entity.EnemyShip;
-import entity.EnemyShipFormation;
-import entity.Entity;
-import entity.Ship;
+import entity.*;
 
 /**
  * Implements the game screen, where the action happens.
@@ -71,6 +66,8 @@ public class GameScreen extends Screen {
 	/** Checks if a bonus life is received. */
 	private boolean bonusLife; //보너스라이프 여부
 
+	private shop_item s_i;
+
 	/**
 	 * Constructor, establishes the properties of the screen.
 	 * 
@@ -103,6 +100,24 @@ public class GameScreen extends Screen {
 		this.shipsDestroyed = gameState.getShipsDestroyed();
 	}
 
+	//샵 아이템 단계를 추가하기위한 생성자
+	public GameScreen(final GameState gameState,
+					  final GameSettings gameSettings, final boolean bonusLife,
+					  final int width, final int height, final int fps, final shop_item s_i) {
+		super(width, height, fps);
+
+		this.gameSettings = gameSettings;
+		this.bonusLife = bonusLife;
+		this.level = gameState.getLevel();
+		this.score = gameState.getScore();
+		this.lives = gameState.getLivesRemaining();
+		if (this.bonusLife)
+			this.lives++;
+		this.bulletsShot = gameState.getBulletsShot();
+		this.shipsDestroyed = gameState.getShipsDestroyed();
+		this.s_i = s_i;
+	}
+
 	/**
 	 * Initializes basic screen properties, and adds necessary elements.
 	 */
@@ -113,6 +128,14 @@ public class GameScreen extends Screen {
 		enemyShipFormation = new EnemyShipFormation(this.gameSettings);
 		enemyShipFormation.attach(this); //적포메이션이 스크린의 정보를 알수있도록 넘겨줌(적이 사이드에 닿아서 반대로 가야하는지 여부 등 판별시 필요)
 		this.ship = new Ship(this.width / 2, this.height - 30); //유저함선을 스크린에 맞는 위치(가로 중간, 바닥에서 30만큼 위)에 생성
+
+		//총알 속도 및 빈도에 대한 값 설정
+		if(s_i != null)
+		{
+			ship.setBull_speed(s_i.getBullet_speed()*(-5) -6);
+			ship.setSh_interval(750 - s_i.getShot_freq()*50);
+			ship.changeShootingCooldown();
+		}
 
 		// Appears each 10-30 seconds. 보너스 함선 생성을 위한 cooldown객체 설정
 		this.enemyShipSpecialCooldown = Core.getVariableCooldown(

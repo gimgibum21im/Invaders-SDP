@@ -16,9 +16,24 @@ import engine.DrawManager.SpriteType;
 public class Ship extends Entity {
 
 	/** Time between shots. */
-	private static final int SHOOTING_INTERVAL = 750;
+	private static final int SHOOTING_INTERVAL = 750; //이 부분을 수정하면 총알 발사 빈도 조절이 가능하다. => ship객체 생성시에 설정된다는 점에 유의!
 	/** Speed of the bullets shot by the ship. */
-	private static final int BULLET_SPEED = -6;
+	private static final int BULLET_SPEED = -6; //이부분을 수정해서 총알 속도를 설정 가능하다. 너무 낮으면 문제생기니 적절한 속도 찾기. => 총알 생성시 값이 넣어짐.
+
+
+	private int sh_interval;
+	private int bull_speed;
+
+	public void setSh_interval(int sh_interval)
+	{
+		this.sh_interval = sh_interval;
+	}
+
+	public void setBull_speed(int bull_speed)
+	{
+		this.bull_speed = bull_speed;
+	}
+
 	/** Movement of the ship for each unit of time. */
 	private static final int SPEED = 2;
 	
@@ -41,6 +56,14 @@ public class Ship extends Entity {
 		this.spriteType = SpriteType.Ship;
 		this.shootingCooldown = Core.getCooldown(SHOOTING_INTERVAL);
 		this.destructionCooldown = Core.getCooldown(1000);
+		//2인용 모드 고려해서, 그냥 기본값으로 해둠 처음에.
+		sh_interval = SHOOTING_INTERVAL;
+		bull_speed = BULLET_SPEED;
+	}
+
+	public void changeShootingCooldown()
+	{
+		this.shootingCooldown = Core.getCooldown(sh_interval);
 	}
 
 	/**
@@ -70,7 +93,7 @@ public class Ship extends Entity {
 		if (this.shootingCooldown.checkFinished()) { //발사가능하면
 			this.shootingCooldown.reset(); //시간초기화
 			bullets.add(BulletPool.getBullet(positionX + this.width / 2,
-					positionY, BULLET_SPEED)); //함선의 가로위치에서가운데 & 세로위치그대로, bullet_speed속도로 발사!
+					positionY, bull_speed)); //함선의 가로위치에서가운데 & 세로위치그대로, bullet_speed속도로 발사!
 			return true;
 		}
 		return false;
