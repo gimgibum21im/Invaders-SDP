@@ -9,11 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import entity.shop_item;
-import screen.GameScreen;
-import screen.HighScoreScreen;
-import screen.ScoreScreen;
-import screen.Screen;
-import screen.TitleScreen;
+import screen.*;
 
 /**
  * Implements core game logic.
@@ -114,7 +110,7 @@ public final class Core {
 		gameSettings.add(SETTINGS_LEVEL_7);
 		
 		GameState gameState;
-
+		shop_item s_i = new shop_item(5,10);
 		int returnCode = 1; //0이면 종료, 1이면 타이틀스크린 2면 게임스크린 3이면 최대점수스크린
 		do {
 									//현재 레벨, 점수,     라이프,     쏜총알수,      파괴된적수
@@ -142,7 +138,7 @@ public final class Core {
 					//currentScren을 GameScreen으로 설정함
 					currentScreen = new GameScreen(gameState,
 							gameSettings.get(gameState.getLevel() - 1 ), //gameSettings는 리스트로, 인덱스 0~6까지 사용되며 0은 1렙 6은 7렙임. 따라서 -1한 인덱스의 세팅을 꺼내온다.(106줄에서 순차적으로 add해줬음)
-							bonusLife, width, height, FPS, /*여기에 상점 테스트함*/new shop_item(5,10));
+							bonusLife, width, height, FPS, /*여기에 상점 테스트함*/s_i);
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 							+ " game screen at " + FPS + " fps.");
 
@@ -189,6 +185,16 @@ public final class Core {
 				returnCode = frame.setScreen(currentScreen);
 				LOGGER.info("Closing high score screen.");
 				break;
+
+			///
+			case 4:
+				//shop
+				currentScreen = new ShopScreen(width, height, FPS, s_i);
+				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
+				+ " shop screen at " + FPS + " fps.");
+				returnCode = frame.setScreen(currentScreen);
+				LOGGER.info("Closing shop screen.");
+
 			default:
 				break;
 			}

@@ -84,7 +84,7 @@ public class TitleScreen extends Screen {
 	 */
 	//맨 아래서 또 아래 누르면 처음으로 이동하는 등의 로직 + 2->3->0->2->3->0반복!
 	private void nextMenuItem() {
-		if (this.returnCode == 3)
+		if (this.returnCode == 4)
 			this.returnCode = 0;
 		else if (this.returnCode == 0)
 			this.returnCode = 2;
@@ -98,7 +98,7 @@ public class TitleScreen extends Screen {
 	//맨 위에서 또 위 누르면 마지막으로 이동하는 등의 로직
 	private void previousMenuItem() {
 		if (this.returnCode == 0)
-			this.returnCode = 3;
+			this.returnCode = 4;
 		else if (this.returnCode == 2)
 			this.returnCode = 0;
 		else

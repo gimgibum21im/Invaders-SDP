@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import entity.shop_item;
 import screen.Screen;
 import entity.Entity;
 import entity.Ship;
@@ -307,6 +308,8 @@ public final class DrawManager {
 		String highScoresString = "High scores";
 		String exitString = "exit";
 
+		String shopString = "Shop";
+
 		if (option == 2)
 			backBufferGraphics.setColor(Color.GREEN);
 		else
@@ -324,6 +327,13 @@ public final class DrawManager {
 		else
 			backBufferGraphics.setColor(Color.WHITE);
 		drawCenteredRegularString(screen, exitString, screen.getHeight() / 3
+				* 2 + fontRegularMetrics.getHeight() * 6);
+
+		if (option == 4)
+			backBufferGraphics.setColor(Color.GREEN);
+		else
+			backBufferGraphics.setColor(Color.WHITE);
+		drawCenteredRegularString(screen, shopString, screen.getHeight() / 3
 				* 2 + fontRegularMetrics.getHeight() * 4);
 	}
 
@@ -523,7 +533,7 @@ public final class DrawManager {
 
 	/**
 	 * Countdown to game start.
-	 * 
+	 *
 	 * @param screen
 	 *            Screen to draw on.
 	 * @param level
@@ -559,4 +569,44 @@ public final class DrawManager {
 			drawCenteredBigString(screen, "GO!", screen.getHeight() / 2
 					+ fontBigMetrics.getHeight() / 3);
 	}
+
+	///////////////////////////////////////////
+	public void drawShop(final Screen screen, final int option, final shop_item s_i) {
+
+		String shopString = "Shop";
+		String instructionsString =
+				"additional shop text";
+
+		backBufferGraphics.setColor(Color.GRAY);
+		drawCenteredRegularString(screen, instructionsString,
+				screen.getHeight() / 2);
+
+		backBufferGraphics.setColor(Color.GREEN);
+		drawCenteredBigString(screen, shopString, screen.getHeight() / 3);
+
+
+		String item1String = "bullet_speed";
+		String item2String = "shot_freq";
+		String item3String = "additional_life";
+
+		if (option == 1)
+			backBufferGraphics.setColor(Color.GREEN);
+		else
+			backBufferGraphics.setColor(Color.WHITE);
+		drawCenteredRegularString(screen, item1String + "level: "+ s_i.getBullet_speed(),
+				screen.getHeight() / 3 * 2);
+		if (option == 2)
+			backBufferGraphics.setColor(Color.GREEN);
+		else
+			backBufferGraphics.setColor(Color.WHITE);
+		drawCenteredRegularString(screen, item2String+ "level: "+ s_i.getShot_freq(), screen.getHeight()
+				/ 3 * 2 + fontRegularMetrics.getHeight() * 2);
+		if (option == 3)
+			backBufferGraphics.setColor(Color.GREEN);
+		else
+			backBufferGraphics.setColor(Color.WHITE);
+		drawCenteredRegularString(screen, item3String, screen.getHeight() / 3
+				* 2 + fontRegularMetrics.getHeight() * 4);
+	}
+
 }

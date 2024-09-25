@@ -19,4 +19,14 @@ public class shop_item {
     {
         return bullet_speed;
     }
+
+    public void setShot_freq(int shot_freq)
+    {
+        this.shot_freq = shot_freq;
+    }
+
+    public void setBullet_speed(int bullet_speed)
+    {
+        this.bullet_speed = bullet_speed;
+    }
 }
